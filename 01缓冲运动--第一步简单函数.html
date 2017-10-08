@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="按钮" id="btn" />
+		<div id="box"></div>
+	</body>
+	<script type="text/javascript">
+		
+		var oBtn = document.getElementById("btn");
+		var oBox = document.getElementById("box");
+		var timer = null;
+		
+		oBtn.onclick = function() {
+			// 开新的定时器之前 先清除原先的定时器
+			clearInterval(timer);
+			timer = setInterval(function(){
+				
+				if(oBox.offsetLeft == 500) {
+					clearInterval(timer);
+					timer = null;
+				}else{
+					oBox.style.left = oBox.offsetLeft + 10 + "px";
+				}
+				
+				
+			},30);
+			
+			
+		}
+		
+	</script>
+</html>

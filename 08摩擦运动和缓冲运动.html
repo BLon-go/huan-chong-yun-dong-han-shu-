@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="按钮" id="btn" />
+		<div id="box"></div>
+	</body>
+	<script type="text/javascript">
+		
+		var oBtn = document.getElementById("btn");
+		var oBox = document.getElementById("box");
+		var timer = null;
+		var speed = 50;
+		oBtn.onclick = function() {
+			
+			clearInterval(timer);
+			timer = setInterval(function(){
+				
+				//speed -= 2;
+				
+				//speed *= 0.8888;
+				
+				/*   speed = 400
+				 *     0------->500*0.8 
+				 *             距离目标点       速度
+				 *              500      400
+				 *              100      80 
+				 *              20       16
+				 *               4        3.2
+				 *               0.8      0.64
+				 *               0.16     
+				 * 
+				 * 缓冲运动    距离目标点越来越近  速度越来越小
+				 *       （目标点--当前的位置）*0.8
+				 * 
+				 * 
+				 * */
+				
+				speed = (500- oBox.offsetLeft)*0.4;
+				
+				if(oBox.offsetLeft == 500) {
+					clearInterval(timer);
+					timer = null;
+				}else {
+					oBox.style.left = oBox.offsetLeft + speed + "px"
+				}
+				
+				
+				
+				
+			},30)
+			
+		}
+	</script>
+</html>

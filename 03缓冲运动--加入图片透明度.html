@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 150px;
+				height: 300px;
+				background: red;
+				position: fixed;
+				left: -150px;
+				top: 100px;
+			}
+			#side {
+				width: 30px;
+				height: 60px;
+				text-align: center;
+				line-height: 20px;
+				color: white;
+				position: absolute;
+				background: black;
+				right: -30px;
+				top: 120px;
+				cursor: pointer;
+			}
+			#oImg {
+				width: 200px;
+				position: absolute;
+				left: 200px;
+				opacity: 0.3;
+				/*abc:"呵呵";*/
+				filter:alpha(opacity=30);
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="box">
+			<div id="side">分享到</div>
+		</div>
+		<img src="00.jpg" alt="" id="oImg"/>
+	</body>
+	<script type="text/javascript">
+		
+		var oBox = document.getElementById("box");
+		var oImg = document.getElementById("oImg");
+		var timer = null;
+		
+		
+		oBox.onmouseover = function() {
+			startMove(this,10,0);
+			
+		}
+		function startMove(obj,speed,target) {
+			clearInterval(timer);
+			
+			timer = setInterval(function(){
+				
+				if(obj.offsetLeft == target) {
+					
+					clearInterval(timer);
+					timer = null;
+				}else{
+					obj.style.left = obj.offsetLeft + speed + "px";
+				}
+				
+				
+			},30);
+			
+		}
+		
+		function startMove2(obj,speed,target) {
+			clearInterval(timer);
+			var cur = 0;
+			timer = setInterval(function(){
+				// offsetOpacity   getStyle
+				cur = Math.round(getStyle(oImg,"opacity")*100)  // 36.65854 46.8451  58.1564  100
+				// 解决办法    我获取透明度opacity 它是个小数 乘以100 转换成整数 参与运动计算 
+				// 除以100然后再赋值回去
+				
+				if(cur == target) {
+					
+					clearInterval(timer);
+					timer = null;
+				}else{
+					obj.style.opacity = (cur + speed)/100 ;
+					obj.style.filter = 'alpha(opacity='+ (cur + speed) +')';
+				}
+				
+				
+			},30);
+			
+		}
+		
+		function getStyle(obj,attr) {
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+		}
+		oBox.onmouseout = function() {
+			startMove(this,-10,-150) 
+		}
+		
+		// 把鼠标移到图片上面 让图片透明度变成1
+		oImg.onmouseover = function() {
+			startMove2(this,10,100)
+			//alert(getStyle(oImg,"abc"));
+		}
+		oImg.onmouseout = function() {
+			startMove2(this,-10,30)
+			//alert(getStyle(oImg,"abc"));
+		}
+	</script>
+</html>
